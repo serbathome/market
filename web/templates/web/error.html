@@ -1,0 +1,23 @@
+{% extends "web/layout.html" %}
+
+{% load static %}
+
+{% block title%}
+Web market - error happened
+{% endblock %}
+
+{% block body %}
+
+<h1>We are sorry, but something went wrong</h1>
+
+{% if reason %}
+
+<h2> {{reason}} </h2>
+
+{% else %}
+
+<h2>Contact support at support@fedtech.ca</h2>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "web/layout.html" %}
+
+{% load static %}
+
+{% block title%}
+Web market - login
+{% endblock %}
+
+{% block body %}
+
+<h1 class="title mt-5 mb-5 text-center">
+    Welcome to Farm Market!
+</h1>
+
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <div>
+            <form class="row row-cols-lg-auto g-3 align-items-center" method="post" action="/login/">
+                {% csrf_token %}
+                <div class="col-12">
+                    <label class="visually-hidden" for="username">Username</label>
+                    <div class="input-group">
+                        <div class="input-group-text">@</div>
+                        <input type="text" class="form-control" id="username" placeholder="Username" name="username">
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="visually-hidden" for="password">Preference</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-3"></div>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <img class="img-fluid" src="{% static 'web/img/farm-shop.jpg'%}" alt="">
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+{% endblock %}
