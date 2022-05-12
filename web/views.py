@@ -34,10 +34,10 @@ def register(request):
         user.last_name = last_name
         user.save()
         profile = Profile.objects.create(user=user)
-        profile.country = "Canada"
         profile.city = city
         profile.zip = zip
         profile.address = address
+        profile.province = province
         profile.save()
         return HttpResponseRedirect("/")
     else:
@@ -68,17 +68,31 @@ def logout(request):
     return HttpResponseRedirect("/")
 
 
+def profile_update(profile_dict, user, profile):
+    if "first_name" in profile_dict:
+        user.first_name = profile_dict['first_name']
+    if "last_name" in profile_dict:
+        user.last_name = profile_dict['last_name']
+    if "address" in profile_dict:
+        profile.address = profile_dict['address']
+    if "city" in profile_dict:
+        profile.city = profile_dict['city']
+    if "zip" in profile_dict:
+        profile.zip = profile_dict['zip']
+    user.save()
+    profile.save()
+
+
 def profile(request):
     if request.user.is_authenticated == False:
         return HttpResponseRedirect("/login")
     else:
+        user = User.objects.filter(username__exact=request.user).first()
+        profile = Profile.objects.filter(user__exact=user).first()
         if request.method == 'GET':
-            user = User.objects.filter(username__exact=request.user).first()
-            profile = Profile.objects.filter(user__exact=user).first()
-            print(user.first_name, user.last_name)
-            print(profile.province, profile.city, profile.address)
             return render(request, "web/profile.html", {"user": user, "profile": profile})
         elif request.method == 'POST':
-            return HttpResponseRedirect("/profile")
+            profile_update(request.POST, user, profile)
+            return HttpResponseRedirect("/")
         else:
             return render(request, 'web/error.html', {'reason': 'Unsupported method call'})
