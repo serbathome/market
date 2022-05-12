@@ -41,7 +41,7 @@ def register(request):
         profile.save()
         return HttpResponseRedirect("/")
     else:
-        return Http404("Something went wrong")
+        return render(request, 'web/error.html', {'reason': 'Unsupported method call'})
 
 
 def login(request):
@@ -57,10 +57,9 @@ def login(request):
                 do_login(request, user)
                 return HttpResponseRedirect("/")
             else:
-                return Http404("Authentication failed")
-        return Http404("Something went wrong")
+                return render(request, 'web/error.html', {'reason': 'Authentication failed'})
     else:
-        return Http404("Something went wrong")
+        return render(request, 'web/error.html', {'reason': 'Unsupported method call'})
 
 
 def logout(request):
@@ -82,4 +81,4 @@ def profile(request):
         elif request.method == 'POST':
             return HttpResponseRedirect("/profile")
         else:
-            return Http404("Something went wrong")
+            return render(request, 'web/error.html', {'reason': 'Unsupported method call'})
