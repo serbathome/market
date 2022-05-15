@@ -83,10 +83,67 @@ Web market - user profile
             </div>
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 <!-- security -->
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <form class="row g-3" method="post" action="/profile/">
+                            {% csrf_token %}
+                            <div class="col-md-6">
+                                <label for="newPassword" class="form-label">New password</label>
+                                <input type="password" class="form-control" id="new_password" name="new_password"
+                                    required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="newPasswordConfirm" class="form-label">Confirm new password</label>
+                                <input type="password" class="form-control" id="new_password_confirm"
+                                    name="new_password_confirm" required>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
             </div>
 
             <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                 <!-- settings -->
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <form class="row g-3" method="post" action="/profile/">
+                            {% csrf_token %}
+                            <div class="form-check form-switch">
+                                <input name="wantPromoEmails" type="hidden" value="False">
+                                <input class="form-check-input" type="checkbox" role="switch" id="wantPromoEmails"
+                                    name="wantPromoEmails" {% if profile.wantPromoEmails %} checked {%endif %}
+                                    value="True">
+                                <label class="form-check-label" for="wantPromoEmails">I'd like to get news about the
+                                    platform</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input name="wantMarketingEmails" type="hidden" value="False">
+                                <input class="form-check-input" type="checkbox" role="switch" id="wantMarketingEmails"
+                                    name="wantMarketingEmails" {% if profile.wantMarketingEmails %} checked {%endif %}
+                                    value="True">
+                                <label class="form-check-label" for="wantMarketingEmails">I'd like to get marketing
+                                    emails from platform partners</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input name="isFarmer" type="hidden" value="False">
+                                <input class="form-check-input" type="checkbox" role="switch" id="isFarmer"
+                                    name="isFarmer" {% if profile.isFarmer %} checked {%endif %} value="True">
+                                <label class="form-check-label" for="isFarmer">I will be using platform to offer my
+                                    products</label>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
             </div>
         </div>
     </div>

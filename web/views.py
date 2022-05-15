@@ -69,6 +69,7 @@ def logout(request):
 
 
 def profile_update(profile_dict, user, profile):
+    print(profile_dict)
     if "first_name" in profile_dict:
         user.first_name = profile_dict['first_name']
     if "last_name" in profile_dict:
@@ -79,6 +80,12 @@ def profile_update(profile_dict, user, profile):
         profile.city = profile_dict['city']
     if "zip" in profile_dict:
         profile.zip = profile_dict['zip']
+    if "isFarmer" in profile_dict:
+        profile.isFarmer = profile_dict['isFarmer']
+    if "wantMarketingEmails" in profile_dict:
+        profile.wantMarketingEmails = profile_dict['wantMarketingEmails']
+    if "wantPromoEmails" in profile_dict:
+        profile.wantPromoEmails = profile_dict['wantPromoEmails']
     user.save()
     profile.save()
 
