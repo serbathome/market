@@ -32,6 +32,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'profile' %}">My profile</a>
                         </li>
+                        {% if profile.isFarmer %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -46,6 +47,7 @@
                                 <li><a class="dropdown-item" href="#">Find something</a></li>
                             </ul>
                         </li>
+                        {% endif %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">

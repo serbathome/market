@@ -10,7 +10,13 @@ from django.contrib.auth.models import User
 
 
 def index(request):
-    return render(request, "web/index.html")
+    if request.user.is_authenticated == True:
+        user = User.objects.filter(username__exact=request.user).first()
+        profile = Profile.objects.filter(user__exact=user).first()
+        print(profile)
+        return render(request, "web/index.html", {'profile': profile})
+    else:
+        return render(request, "web/index.html")
 
 
 def register(request):
