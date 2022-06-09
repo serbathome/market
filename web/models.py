@@ -18,3 +18,29 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name} aka {self.user.username} ({self.user.email})"
+
+
+MEASURE_CHOICES = (
+    ("Gr", "Gr"),
+    ("Kg", "Kg"),
+    ("Btl", "Btl")
+)
+
+
+class ProductCategory(models.Model):
+    CategoryName = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f'{self.CategoryName}'
+
+
+class Product(models.Model):
+    CategoryID = models.ForeignKey(
+        'ProductCategory', on_delete=models.CASCADE)
+    ProductName = models.CharField(max_length=200)
+    Measure = models.CharField(
+        max_length=3, choices=MEASURE_CHOICES, default='GR')
+    Price = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+
+    def __str__(self):
+        return f'{self.ProductName}'

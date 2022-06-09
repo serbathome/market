@@ -1,10 +1,11 @@
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.contrib.auth import logout as do_logout
 from django.contrib.auth import login as do_login
 from django.contrib.auth import authenticate
-from .models import Profile
+from .models import Profile, ProductCategory, Product
 from django.contrib.auth.models import User
+from django.core import serializers
 
 # Create your views here
 
@@ -109,3 +110,25 @@ def profile(request):
             return HttpResponseRedirect("/")
         else:
             return render(request, 'web/error.html', {'reason': 'Unsupported method call'})
+
+
+# API function calls
+def get_categories(request):
+    # dummy object for list of categories
+    categories = []
+    for category in ProductCategory.objects.all():
+        categories.append(category.CategoryName)
+    return JsonResponse(categories, safe=False)
+
+
+def get_products(request):
+    # dummy object for list of products
+    products = []
+    for product in Product.objects.all():
+        products.append({
+            'CategoryID': product.CategoryID.CategoryName,
+            'ProductName': product.ProductName,
+            'Measure': product.Measure,
+            'Price': product.Price
+        })
+    return JsonResponse(products, safe=False)
