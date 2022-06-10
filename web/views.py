@@ -114,7 +114,6 @@ def profile(request):
 
 # API function calls
 def get_categories(request):
-    # dummy object for list of categories
     categories = []
     for category in ProductCategory.objects.all():
         categories.append(category.CategoryName)
@@ -122,7 +121,6 @@ def get_categories(request):
 
 
 def get_products(request):
-    # dummy object for list of products
     products = []
     for product in Product.objects.all():
         products.append({
