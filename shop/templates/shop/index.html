@@ -37,15 +37,6 @@
     </div>
 
     <!-- Humberger Begin -->
-    <!-- Humberger Vue client -->
-    <script>
-        var app = new Vue({
-            el: '#humberger',
-            data: {
-                user: 'Sergey Biryukov'
-            }
-        })
-    </script>
     <div id="humberger">
         <div class="humberger__menu__overlay"></div>
         <div class="humberger__menu__wrapper">
@@ -104,6 +95,15 @@
             </div>
         </div>
     </div>
+    <!-- Humberger Vue client -->
+    <script>
+        var app = new Vue({
+            el: '#humberger',
+            data: {
+                user: 'Sergey Biryukov'
+            }
+        })
+    </script>
     <!-- Humberger End -->
 
     <!-- Header Section Begin -->
@@ -209,18 +209,9 @@
                                 <span>All departments</span>
                             </div>
                             <ul>
-                                <li v-for="department in departments">{{department}}</li>
-                                <!--li><a href="#">Fresh Meat</a></li>
-                                <li><a href="#">Vegetables</a></li>
-                                <li><a href="#">Fruit & Nut Gifts</a></li>
-                                <li><a href="#">Fresh Berries</a></li>
-                                <li><a href="#">Ocean Foods</a></li>
-                                <li><a href="#">Butter & Eggs</a></li>
-                                <li><a href="#">Fastfood</a></li>
-                                <li><a href="#">Fresh Onion</a></li>
-                                <li><a href="#">Papayaya & Crisps</a></li>
-                                <li><a href="#">Oatmeal</a></li>
-                                <li><a href="#">Fresh Bananas</a></li-->
+                                <li v-for="department in departments">
+                                    [[department]]
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -262,34 +253,20 @@
     <!-- Hero Vue client -->
     <script>
         var app = new Vue({
+            delimiters: ['[[', ']]'],
             el: '#hero',
             data: {
-                departments: [
-                    'Fresh Meat',
-                    'Vegetables',
-                    'Fruit & Nut Gifts',
-                    'Fresh Berries',
-                    'Ocean Foods',
-                    'Butter & Eggs',
-                    'Fastfood',
-                    'Fresh Onion',
-                    'Papayaya & Crisps',
-                    'Oatmeal',
-                    'Fresh Bananas',
-                    'Meat'
-                ]
+                departments: []
             },
-            /*mounted: function () {
-                axios.get('http://flack.codepros.ru/api/get_categories')
-                    .then(function (response) {
-                        // handle success
-                        console.log(response);
+            mounted: function () {
+                axios.get('/api/categories')
+                    .then((response) => {
+                        this.departments = response.data;
                     })
-                    .catch(function (error) {
-                        // handle error
+                    .catch((error) => {
                         console.log(error);
                     });
-            }*/
+            }
         })
     </script>
     <!-- Hero Section End -->
