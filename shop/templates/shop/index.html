@@ -15,7 +15,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
-    <!--link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"-->
     <link rel="stylesheet" href="{% static 'shop/css/bootstrap.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'shop/css/font-awesome.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'shop/css/elegant-icons.css' %}" type="text/css">
@@ -76,7 +75,7 @@
                             <li><a href="./blog-details.html">Blog Details</a></li>
                         </ul>
                     </li>
-                    <li><a href="./blog.html">Blog</a></li>
+                    <li><a href="shop/blog">Blog</a></li>
                     <li><a href="./contact.html">Contact</a></li>
                 </ul>
             </nav>
@@ -210,7 +209,7 @@
                             </div>
                             <ul>
                                 <li v-for="department in departments">
-                                    [[department]]
+                                    <a href="#">[[department]]</a>
                                 </li>
                             </ul>
                         </div>
