@@ -10,3 +10,7 @@ def index(request):
 
 def blog(request):
     return render(request, 'shop/blog.html')
+
+
+def example(request):
+    return render(request, 'shop/example.html')
