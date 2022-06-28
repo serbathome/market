@@ -243,8 +243,8 @@
                             {% endblock %}
                         </h2>
                         <div class="breadcrumb__option">
-                            <a href="./index.html">Home</a>
-                            <span>Blog</span>
+                            {% block breadcrumber_subtitle %}
+                            {% endblock %}
                         </div>
                     </div>
                 </div>
@@ -254,7 +254,9 @@
     <!-- Breadcrumb Section End -->
 
     <!-- Main content section -->
+    {% block content%}
     <div id="app"></div>
+    {% endblock %}
     <!-- Main content section -->
 
     <!-- Footer Section Begin -->
