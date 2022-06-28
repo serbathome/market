@@ -88,7 +88,26 @@ Community market
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <!-- products grid -->
+                <div class="row" id="products">
+
+                    <div v-for="product in products" class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg"
+                                data-setbg="{% static 'shop/img/product/product-1.jpg' %}">
+                                <ul class="product__item__pic__hover">
+                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="#">[[ product.ProductName ]]</a></h6>
+                                <h5>$[[ product.Price ]]</h5>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="product__item">
                             <div class="product__item__pic set-bg"
@@ -282,6 +301,7 @@ Community market
                         </div>
                     </div>
                 </div>
+                <!-- end of products grid -->
                 <div class="product__pagination">
                     <a href="#">1</a>
                     <a href="#">2</a>
@@ -293,4 +313,23 @@ Community market
     </div>
 </section>
 <!-- Product Section End -->
+<script>
+    var app = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#products',
+        data: {
+            products: []
+        },
+        mounted: function () {
+            axios.get('/api/products')
+                .then((response) => {
+                    this.products = response.data;
+                    console.log(this.products);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    })
+</script>
 {% endblock %}
