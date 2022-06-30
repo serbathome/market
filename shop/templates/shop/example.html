@@ -123,7 +123,6 @@ Community market
 <!-- Product Section End -->
 <script>
     var app = new Vue({
-        //delimiters: ['[[', ']]'],
         el: '#products',
         data: {
             products: []
@@ -132,7 +131,6 @@ Community market
             axios.get('/api/products')
                 .then((response) => {
                     this.products = response.data;
-                    console.log(this.products);
                 })
                 .catch((error) => {
                     console.log(error);
