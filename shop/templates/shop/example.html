@@ -94,8 +94,8 @@ Community market
                     {% verbatim %}
                     <div v-for="product in products" class="col-lg-4 col-md-6 col-sm-6">
                         <div class="product__item">
-                            <div class="product__item__pic set-bg">
-                                <img :src="product.Picture">
+                            <div v-bind:style="{backgroundImage: 'url(' + product.Picture + ')'}"
+                                class="product__item__pic set-bg">
                                 <ul class="product__item__pic__hover">
                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -125,7 +125,6 @@ Community market
 <!-- Product Section End -->
 <script>
     var app = new Vue({
-        //delimiters: ['[[', ']]'],
         el: '#products',
         data: {
             products: []
