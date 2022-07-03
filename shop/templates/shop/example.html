@@ -16,7 +16,7 @@ Community market
 
 {% block content %}
 <!-- Product Section Begin -->
-<section class="product spad">
+<section class="product spad" id="app1">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-5">
@@ -66,18 +66,21 @@ Community market
             <div class="col-lg-9 col-md-7">
                 <div class="filter__item">
                     <div class="row">
-                        <div class="col-lg-4 col-md-5">
-                            <div class="filter__sort">
-                                <span>Sort By</span>
-                                <select>
-                                    <option value="0">Default</option>
-                                    <option value="0">Default</option>
-                                </select>
+                        <div class="col-lg-4 col-md-4">
+                            <div class="filter__found">
+                                {% verbatim %}
+                                <h6>Filter by:
+                                    <span @click="sortProductsBy('name')">Name</span>
+                                    <span @click="sortProductsBy('price')">Price</span>
+                                </h6>
+                                {% endverbatim %}
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4">
                             <div class="filter__found">
-                                <h6><span>16</span> Products found</h6>
+                                {% verbatim %}
+                                <h6><span>{{ products.length }}</span> Products found</h6>
+                                {% endverbatim %}
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-3">
@@ -89,17 +92,17 @@ Community market
                     </div>
                 </div>
                 <!-- products grid -->
-                <div class="row" id="products">
+                <div class="row">
 
                     {% verbatim %}
                     <div v-for="product in products" class="col-lg-4 col-md-6 col-sm-6">
                         <div class="product__item">
                             <div v-bind:style="{backgroundImage: 'url(' + product.Picture + ')'}"
-                                class="product__item__pic set-bg">
+                                :data-setbg="product.Picture" class="product__item__pic set-bg">
                                 <ul class="product__item__pic__hover">
                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li><a v-on:click.prevent="yo" href="#"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
                             <div class="product__item__text">
@@ -125,15 +128,43 @@ Community market
 <!-- Product Section End -->
 <script>
     var app = new Vue({
-        el: '#products',
+        el: '#app1',
         data: {
-            products: []
+            products: [],
+            categories: [],
+            farmers: [],
+        },
+        methods: {
+            sortProductsBy(sortType) {
+                if (sortType == "price") {
+                    this.products.sort(function (a, b) {
+                        var A = Number(a.Price);
+                        var B = Number(b.Price);
+                        if (A < B) return -1;
+                        if (A > B) return 1;
+                        return 0;
+                    });
+                }
+                if (sortType == "name") {
+                    this.products.sort(function (a, b) {
+                        var A = String(a.ProductName);
+                        var B = String(b.ProductName);
+                        if (A < B) return -1;
+                        if (A > B) return 1;
+                        return 0;
+                    });
+                }
+            },
+            yo() {
+                alert('Xo!');
+            },
         },
         mounted: function () {
+            // get products
             axios.get('/api/products')
                 .then((response) => {
                     this.products = response.data;
-                    console.log(this.products);
+                    this.sortProductsBy("name");
                 })
                 .catch((error) => {
                     console.log(error);
