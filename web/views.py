@@ -225,6 +225,7 @@ def product_list(request, category_id=None):
     print (category)
     print('categories') 
     print (categories)
+    print ('Render')
     return render(request,
                   'shop/product/list.html',
                   {'category': category,
@@ -232,15 +233,13 @@ def product_list(request, category_id=None):
                    'products': products})
 
 def product_detail(request, id):
+    print('Prodcut detail-start')
     product = get_object_or_404(Product,id=id)
     cart_product_form = CartAddProductForm()
-    print(cart_product_form)
     print("cart_product_form - end")
     return render(request,
                   'shop/product/detail.html',
                   {'product': product, 'cart_product_form': cart_product_form})
-
-
 
 
 @require_POST

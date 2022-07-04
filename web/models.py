@@ -1,6 +1,7 @@
 import django
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 
 
 # Create your models here.
@@ -33,6 +34,12 @@ class ProductCategory(models.Model):
     def __str__(self):
         return f'{self.CategoryName}'
 
+    def get_absolute_url(self):
+    #    print('absolute_url_ProductCategories')
+     #   print(self)
+      #  print(self.id)
+        return reverse('product_list_by_category',
+                        args=[self.id])
 
 class Product(models.Model):
     CategoryID = models.ForeignKey(
@@ -46,3 +53,7 @@ class Product(models.Model):
 
     def __str__(self):
         return f'{self.ProductName}'
+
+    def get_absolute_url(self):
+        return reverse('product_detail',
+                        args=[self.id])
