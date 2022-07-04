@@ -41,6 +41,8 @@ class Product(models.Model):
     Measure = models.CharField(
         max_length=3, choices=MEASURE_CHOICES, default='GR')
     Price = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    Picture = models.CharField(
+        blank=False, default='/static/shop/img/product/product-1.jpg', max_length=200)
 
     def __str__(self):
         return f'{self.ProductName}'

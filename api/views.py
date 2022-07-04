@@ -20,6 +20,7 @@ def products(request):
             'CategoryID': product.CategoryID.CategoryName,
             'ProductName': product.ProductName,
             'Measure': product.Measure,
-            'Price': product.Price
+            'Price': product.Price,
+            'Picture': product.Picture
         })
     return JsonResponse(products, safe=False)
