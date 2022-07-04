@@ -199,6 +199,46 @@ class Cart(object):
         del self.session[settings.CART_SESSION_ID]
         self.session.modified = True
 
+def product_list(request, category_id=None):
+    print(request)
+    print(category_id)
+    print('112')
+    category = None
+    categories = ProductCategory.objects.all()
+    products = Product.objects.all()
+    print(request)
+    print('products') 
+    print (products)      
+    print('category') 
+    print (category)
+    print('categories') 
+    print (categories)  
+    print('212')
+    if category_id:
+      category = get_object_or_404(ProductCategory, id = category_id)
+      products = products.filter(CategoryID=category)
+      print('313')
+    print(request)
+    print('products') 
+    print (products)      
+    print('category') 
+    print (category)
+    print('categories') 
+    print (categories)
+    return render(request,
+                  'shop/product/list.html',
+                  {'category': category,
+                   'categories': categories,
+                   'products': products})
+
+def product_detail(request, id):
+    product = get_object_or_404(Product,id=id)
+    cart_product_form = CartAddProductForm()
+    print(cart_product_form)
+    print("cart_product_form - end")
+    return render(request,
+                  'shop/product/detail.html',
+                  {'product': product, 'cart_product_form': cart_product_form})
 
 
 
@@ -215,14 +255,14 @@ def cart_add(request, product_id):
         cart.add(product=product,
                  quantity=cd['quantity'],
                  update_quantity=cd['update'])
-    return redirect('cart_detail')
+    return redirect('shoping-cart')
 
 def cart_remove(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
-    return redirect('cart_detail')
+    return redirect('shoping-cart')
 
 def cart_detail(request):
     cart = Cart(request)
-    return render(request, 'cart/detail.html', {'cart': cart})
+    return render(request, 'shop/shoping-cart.html', {'cart': cart})
