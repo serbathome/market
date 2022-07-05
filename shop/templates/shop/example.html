@@ -24,16 +24,10 @@ Community market
                     <div class="sidebar__item">
                         <h4>Department</h4>
                         <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
+                            {% verbatim %}
+                            <li v-for="c in categories"><a href="#">{{ c }}</a></li>
+                            {% endverbatim %}
+
                         </ul>
                     </div>
                     <div class="sidebar__item">
@@ -53,26 +47,27 @@ Community market
                             </div>
                         </div>
                     </div>
-                    <div class="sidebar__item">
-                        <h4>Farmers</h4>
-                        <ul>
-                            <li><a href="#">John Doe</a></li>
-                            <li><a href="#">Tom Reddl</a></li>
-                            <li><a href="#">John Galt</a></li>
-                        </ul>
-                    </div>
                 </div>
             </div>
             <div class="col-lg-9 col-md-7">
                 <div class="filter__item">
                     <div class="row">
                         <div class="col-lg-4 col-md-4">
-                            <div class="filter__found">
+                            <!--div class="filter__found">
                                 {% verbatim %}
                                 <h6>Order by:
                                     <span @click="sortProductsBy('name')">Name</span>
                                     <span @click="sortProductsBy('price')">Price</span>
                                 </h6>
+                                {% endverbatim %}
+                            </div-->
+                            <div class="filter__sort">
+                                <span>Sort By</span>
+                                {% verbatim %}
+                                <select @change="sortProductsBy('name')">
+                                    <option value="name">Name</option>
+                                    <option value="price">Price</option>
+                                </select>
                                 {% endverbatim %}
                             </div>
                         </div>
@@ -101,8 +96,10 @@ Community market
                                 :data-setbg="product.Picture" class="product__item__pic set-bg">
                                 <ul class="product__item__pic__hover">
                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                    <li><a v-on:click.prevent="yo" href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li><a v-on:click.prevent="yo('opening product info page')" href="#"><i
+                                                class="fa fa-info"></i></a></li>
+                                    <li><a v-on:click.prevent="yo('going to the cart')" href="#"><i
+                                                class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
                             <div class="product__item__text">
@@ -155,8 +152,8 @@ Community market
                     });
                 }
             },
-            yo() {
-                alert('Xo!');
+            yo(message) {
+                alert(message);
             },
         },
         mounted: function () {
@@ -165,6 +162,13 @@ Community market
                 .then((response) => {
                     this.products = response.data;
                     this.sortProductsBy("name");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            axios.get('/api/categories')
+                .then((response) => {
+                    this.categories = response.data;
                 })
                 .catch((error) => {
                     console.log(error);
