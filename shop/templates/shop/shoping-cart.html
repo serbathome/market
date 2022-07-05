@@ -256,6 +256,20 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <!--Читаем переданный обьект cart -START -->
+                                {% for item in cart %}
+                                <tr>
+                                    <td> NO_Image </td>
+                                    <td>{{ item.product.id }}</td>
+                                    <td>{{ item.product.ProductName }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td><a href="{% url "cart_remove" item.product.id%}">Remove</a></td>
+                                    <td><a href="{% url "cart_add" item.product.id%}">+</a></td>
+                                    <td class="num">${{ item.price }}</td>
+                                    <td class="num">${{ item.total_price }}</td>
+                                </tr>
+                                 {% endfor %}
+                                <!--Читаем переданный обьект cart -END -->
                                 <tr>
                                     <td class="shoping__cart__item">
                                         <img src="img/cart/cart-1.jpg" alt="">

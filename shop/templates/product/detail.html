@@ -1,0 +1,18 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}
+    {% if category %}{{ category.title }}{% else %}Products{% endif %}
+{% endblock %}
+{% block content %}
+    <div class="product-detail">
+        <h1>{{ product.ProductName }}</h1>
+        <h2><a href="{{ product.category.get_absolute_url }}">{{ product.CategoryID }}</a></h2>
+        <p class="price">${{ product.Price }}</p>
+        <form action="{% url "cart_add" product.id %}" method="post">
+            {{ cart_product_form }}
+            {% csrf_token %}
+            <input type="submit" value="Add to cart">
+        </form>
+        {{ product.description|linebreaks }}
+    </div>
+{% endblock %}
