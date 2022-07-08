@@ -9,6 +9,7 @@ from django.urls import reverse
 class Profile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    businessName = models.CharField(max_length=32, blank=False, default="N/A")
     province = models.CharField(max_length=16, blank=False)
     city = models.CharField(max_length=16, blank=False)
     zip = models.CharField(max_length=16, blank=False)
