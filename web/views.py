@@ -159,6 +159,18 @@ class Cart(object):
             self.cart[product_id]['quantity'] += quantity
         self.save()
 
+    def increase(self, product):
+        #Увеличить продукт в корзине.
+        product_id = str(product.id)
+        self.cart[product_id]['quantity'] += 1
+        self.save()        
+
+    def decrease(self, product):
+        #Уменьшить продукт в корзине.
+        product_id = str(product.id)
+        self.cart[product_id]['quantity'] -= 1
+        self.save()     
+
     def save(self):
         # Обновление сессии cart
         self.session[settings.CART_SESSION_ID] = self.cart
@@ -284,7 +296,7 @@ def cart_remove(request, product_id):
 #    return redirect('shoping-cart')    
 
 def cart_plusminus(request):
-    print("Called plus minus method")
+    print("Called def cart_plusminus(request):")
     print(request)
     cart = Cart(request)
     product_id = request.GET["product_id"]
@@ -307,6 +319,23 @@ def cart_plusminus(request):
                  update_quantity=True)
     return redirect('shoping-cart')    
 
+def cart_increase(request, product_id):
+    print("Called def cart_increase(request):")
+    print(request)
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    print(product)
+    cart.increase(product=product)
+    return redirect('shoping-cart')    
+
+def cart_decrease(request, product_id):
+    print("Called def cart_decrease(request):")
+    print(request)
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    print(product)
+    cart.decrease(product=product)
+    return redirect('shoping-cart')    
 
 def cart_detail(request):
     cart = Cart(request)

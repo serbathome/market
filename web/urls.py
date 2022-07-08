@@ -15,9 +15,8 @@ urlpatterns = [
     re_path(r'shop/shoping-cart', views.cart_detail, name='shoping-cart'),
 
     re_path(r'shop/add/(?P<product_id>[-\w]+)/$', views.cart_add, name='cart_add'),
-    # re_path(r'shop/plusminus/(?P<product_id>[-\w]+)/$', views.cart_plusminus, name='cart_plusminus'),
-    re_path(r'shop/plusminus/<int:product_id>/<int:quantity>/<int:act>/', views.cart_plusminus, name='cart_plusminus'),
-    
+    re_path(r'shop/increase/(?P<product_id>[-\w]+)/$', views.cart_increase, name='cart_increase'),
+    re_path(r'shop/decrease/(?P<product_id>[-\w]+)/$', views.cart_decrease, name='cart_decrease'),
     re_path(r'shop/remove/(?P<product_id>[-\w]+)/$', views.cart_remove, name='cart_remove'),
  
     re_path(r'list/bycat/(?P<category_id>[-\w]+)/$',
