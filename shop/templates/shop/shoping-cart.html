@@ -264,7 +264,7 @@
                                     <td>{{ item.product.ProductName }}</td>
                                     <td>{{ item.quantity }}</td>
                                     <td><a href="{% url "cart_remove" item.product.id%}">Remove</a></td>
-                                    <td><a href="{% url "cart_add" item.product.id%}">+</a></td>
+                                    <td><a href="{% url 'cart_plusminus' product_id=item.product.id quantity=quantity act=1 %}">PlusMinus</a></td>        
                                     <td class="num">${{ item.price }}</td>
                                     <td class="num">${{ item.total_price }}</td>
                                 </tr>

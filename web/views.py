@@ -259,8 +259,54 @@ def cart_add(request, product_id):
 def cart_remove(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
+    print('CART_remove')
+    print(product) 
+    print(request)    
     cart.remove(product)
     return redirect('shoping-cart')
+
+#def cart_plusminus(request, product_id, quantity, act):
+#    print("Called plus minus method")
+#    cart = Cart(request)
+#    product = get_object_or_404(Product, id=product_id)
+#    quant = quantity
+#    print('CART_plus\minus')
+#    print(product)
+#    if act == 1 :
+#        quant = quant +1
+#    else :
+#        quant = quant -1
+#    if quant < 0 :
+#        quant = 0
+#    cart.add(product=product,
+#                quantity=quant,
+#                update_quantity=cd['update'])
+#    return redirect('shoping-cart')    
+
+def cart_plusminus(request):
+    print("Called plus minus method")
+    print(request)
+    cart = Cart(request)
+    product_id = request.GET["product_id"]
+    quant = int(request.GET["quantity"])
+    product = get_object_or_404(Product, id=int(product_id))
+    #quant = quantity
+    act=1
+    print('CART_plus\minus')
+    print(product)
+    if act == 1 :
+        quant = quant +1
+    else :
+        quant = quant -1
+
+    if quant < 0 :
+        quant = 0
+
+    cart.add(product=product,
+                 quantity=quant,
+                 update_quantity=True)
+    return redirect('shoping-cart')    
+
 
 def cart_detail(request):
     cart = Cart(request)
