@@ -158,6 +158,18 @@ class Cart(object):
             self.cart[product_id]['quantity'] += quantity
         self.save()
 
+    def increase(self, product):
+        #Увеличить продукт в корзине.
+        product_id = str(product.id)
+        self.cart[product_id]['quantity'] += 1
+        self.save()        
+
+    def decrease(self, product):
+        #Уменьшить продукт в корзине.
+        product_id = str(product.id)
+        self.cart[product_id]['quantity'] -= 1
+        self.save()     
+
     def save(self):
         # Обновление сессии cart
         self.session[settings.CART_SESSION_ID] = self.cart
@@ -224,6 +236,7 @@ def product_list(request, category_id=None):
     print (category)
     print('categories') 
     print (categories)
+    print ('Render')
     return render(request,
                   'shop/product/list.html',
                   {'category': category,
@@ -231,15 +244,13 @@ def product_list(request, category_id=None):
                    'products': products})
 
 def product_detail(request, id):
+    print('Prodcut detail-start')
     product = get_object_or_404(Product,id=id)
     cart_product_form = CartAddProductForm()
-    print(cart_product_form)
     print("cart_product_form - end")
     return render(request,
                   'shop/product/detail.html',
                   {'product': product, 'cart_product_form': cart_product_form})
-
-
 
 
 @require_POST
@@ -259,8 +270,71 @@ def cart_add(request, product_id):
 def cart_remove(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
+    print('CART_remove')
+    print(product) 
+    print(request)    
     cart.remove(product)
     return redirect('shoping-cart')
+
+#def cart_plusminus(request, product_id, quantity, act):
+#    print("Called plus minus method")
+#    cart = Cart(request)
+#    product = get_object_or_404(Product, id=product_id)
+#    quant = quantity
+#    print('CART_plus\minus')
+#    print(product)
+#    if act == 1 :
+#        quant = quant +1
+#    else :
+#        quant = quant -1
+#    if quant < 0 :
+#        quant = 0
+#    cart.add(product=product,
+#                quantity=quant,
+#                update_quantity=cd['update'])
+#    return redirect('shoping-cart')    
+
+def cart_plusminus(request):
+    print("Called def cart_plusminus(request):")
+    print(request)
+    cart = Cart(request)
+    product_id = request.GET["product_id"]
+    quant = int(request.GET["quantity"])
+    product = get_object_or_404(Product, id=int(product_id))
+    #quant = quantity
+    act=1
+    print('CART_plus\minus')
+    print(product)
+    if act == 1 :
+        quant = quant +1
+    else :
+        quant = quant -1
+
+    if quant < 0 :
+        quant = 0
+
+    cart.add(product=product,
+                 quantity=quant,
+                 update_quantity=True)
+    return redirect('shoping-cart')    
+
+def cart_increase(request, product_id):
+    print("Called def cart_increase(request):")
+    print(request)
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    print(product)
+    cart.increase(product=product)
+    return redirect('shoping-cart')    
+
+def cart_decrease(request, product_id):
+    print("Called def cart_decrease(request):")
+    print(request)
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    print(product)
+    cart.decrease(product=product)
+    return redirect('shoping-cart')    
 
 def cart_detail(request):
     cart = Cart(request)
