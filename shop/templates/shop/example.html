@@ -53,21 +53,11 @@ Community market
                 <div class="filter__item">
                     <div class="row">
                         <div class="col-lg-4 col-md-4">
-                            <!--div class="filter__found">
-                                {% verbatim %}
-                                <h6>Order by:
-                                    <span @click="sortProductsBy('name')">Name</span>
-                                    <span @click="sortProductsBy('price')">Price</span>
-                                </h6>
-                                {% endverbatim %}
-                            </div-->
                             <div class="filter__sort">
                                 <span>Sort By</span>
                                 {% verbatim %}
-                                <select @change="sortProductsBy('name')">
-                                    <option value="name">Name</option>
-                                    <option value="price">Price</option>
-                                </select>
+                                <v-select :options="sortOptions" v-model="sorting" @input="sortProductsBy(sorting)">
+                                </v-select>
                                 {% endverbatim %}
                             </div>
                         </div>
@@ -88,7 +78,6 @@ Community market
                 </div>
                 <!-- products grid -->
                 <div class="row">
-
                     {% verbatim %}
                     <div v-for="product in products" class="col-lg-4 col-md-6 col-sm-6">
                         <div class="product__item">
@@ -124,16 +113,19 @@ Community market
 </section>
 <!-- Product Section End -->
 <script>
+    Vue.component('v-select', VueSelect.VueSelect);
     var app = new Vue({
         el: '#app1',
         data: {
             products: [],
             categories: [],
             farmers: [],
+            sortOptions: ['Name', 'Price'],
+            sorting: 'Name',
         },
         methods: {
             sortProductsBy(sortType) {
-                if (sortType == "price") {
+                if (sortType == "Price") {
                     this.products.sort(function (a, b) {
                         var A = Number(a.Price);
                         var B = Number(b.Price);
@@ -142,7 +134,7 @@ Community market
                         return 0;
                     });
                 }
-                if (sortType == "name") {
+                if (sortType == "Name") {
                     this.products.sort(function (a, b) {
                         var A = String(a.ProductName);
                         var B = String(b.ProductName);
@@ -161,7 +153,7 @@ Community market
             axios.get('/api/products')
                 .then((response) => {
                     this.products = response.data;
-                    this.sortProductsBy("name");
+                    this.sortProductsBy("Name");
                 })
                 .catch((error) => {
                     console.log(error);
