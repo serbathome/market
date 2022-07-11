@@ -1,3 +1,4 @@
+from pyexpat import model
 import django
 from django.conf import settings
 from django.db import models
@@ -36,11 +37,12 @@ class ProductCategory(models.Model):
         return f'{self.CategoryName}'
 
     def get_absolute_url(self):
-    #    print('absolute_url_ProductCategories')
+        #    print('absolute_url_ProductCategories')
      #   print(self)
       #  print(self.id)
         return reverse('product_list_by_category',
-                        args=[self.id])
+                       args=[self.id])
+
 
 class Product(models.Model):
     CategoryID = models.ForeignKey(
@@ -57,4 +59,12 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('product_detail',
-                        args=[self.id])
+                       args=[self.id])
+
+
+class Order(models.Model):
+    product = models.OneToOneField(to=Product, on_delete=models.CASCADE)
+    amount = models.IntegerField(blank=False, default=0)
+
+    def __str__(self):
+        return f"{self.product} : {self.amount}"
