@@ -264,16 +264,12 @@
                                     <td>{{ item.quantity }}</td>
 
                                     <td>{{ item.total }}</td>
-                                    {% verbatim %}
-                                    <!--td><a href="{% url 'cart_remove item.product.id%''}">Remove</a></td>
-                                    <td><a href="{% url " cart_add" item.product.id%}">+</a></td>
 
-                                    <td><a href="{% url " cart_remove" item.product.id%}">Remove</a></td>
-                                    <td><a href="{% url " cart_increase" item.product.id%}">+</a></td>
-                                    <td><a href="{% url " cart_decrease" item.product.id%}">-</a></td>
-                                    <td class="num">${{ item.price }}</td>
-                                    <td class="num">${{ item.total_price }}</td-->
-                                    {% endverbatim %}
+                                    <td><a href="{% url 'cart_remove' item.product.id%}">Remove</a></td>
+                                    <td><a href="{% url 'cart_increase' item.product.id%}">+</a></td>
+                                    <td><a href="{% url 'cart_decrease' item.product.id%}">-</a></td>
+                                    <td class="num">{{ item.price }}</td>
+                                    <td class="num">{{ item.total_price }}</td>
                                 </tr>
                                 {% endfor %}
                                 <!--Читаем переданный обьект cart -END -->
